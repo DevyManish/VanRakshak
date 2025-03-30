@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const Hero5 = () => {
     const [titleNumber, setTitleNumber] = useState(0);
@@ -67,15 +68,17 @@ export const Hero5 = () => {
                         </p>
                     </div>
                     <div className="flex flex-row gap-3">
-                        <Button size="lg" className="gap-4 bg-green-500 hover:bg-green-400">
-                            <div className="flex gap-2 space-x-3">
-                                Download
-                                <Image src="/android.svg"
-                                    alt="android"
-                                    width="20"
-                                    height="20" />
-                            </div>
-                        </Button>
+                        <Link href="/VanaRaksha.apk">
+                            <Button size="lg" className="gap-4 bg-green-500 hover:bg-green-400">
+                                <div className="flex gap-2 space-x-3">
+                                    Download
+                                    <Image src="/android.svg"
+                                        alt="android"
+                                        width="20"
+                                        height="20" />
+                                </div>
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </div>
