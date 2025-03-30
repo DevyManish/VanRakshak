@@ -385,7 +385,7 @@ function AddRangerDialog({ open, onOpenChange, onRangerAdded }) {
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={isSubmitting}>
+              <Button type="submit" disabled={isSubmitting} className="bg-green-500 hover:bg-green-300">
                 {isSubmitting ? "Adding..." : "Add Ranger"}
               </Button>
             </DialogFooter>
@@ -433,7 +433,7 @@ export default function RangersPage() {
       <Card className="w-full">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-2xl">Forest Rangers</CardTitle>
-          <Button onClick={() => setIsDialogOpen(true)}>
+          <Button onClick={() => setIsDialogOpen(true)} className="bg-green-500 hover:bg-green-300">
             <PlusCircle className="mr-2 h-4 w-4" />
             Add Ranger
           </Button>
