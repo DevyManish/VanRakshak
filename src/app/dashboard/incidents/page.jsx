@@ -45,7 +45,7 @@ export default function IncidentReports() {
     const fetchReports = async () => {
       try {
         const token = getAuthToken()
-        const response = await fetch('https://api-7fy6reml3q-uc.a.run.app/api/admin/reports', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/reports`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

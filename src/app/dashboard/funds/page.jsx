@@ -56,7 +56,7 @@ const fetchFundraisers = async () => {
     }
 
     const response = await fetch(
-      "https://api-7fy6reml3q-uc.a.run.app/api/admin/fundraisers",
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/fundraisers`,
       {
         method: "GET",
         headers: {
@@ -109,7 +109,7 @@ export default function FundraiserManagement() {
       }
 
       const response = await fetch(
-        "https://api-7fy6reml3q-uc.a.run.app/api/admin/fundraisers",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/fundraisers`,
         {
           method: "GET",
           headers: {
@@ -165,7 +165,7 @@ export default function FundraiserManagement() {
       }
 
       const response = await fetch(
-        "https://api-7fy6reml3q-uc.a.run.app/api/admin/fundraisers",
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/admin/fundraisers`,
         {
           method: "POST",
           headers: {

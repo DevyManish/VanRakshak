@@ -44,7 +44,7 @@ async function getRangers() {
     throw new Error("Authentication token is missing")
   }
 
-  const response = await fetch("https://api-7fy6reml3q-uc.a.run.app/api/rangers", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/rangers`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ async function getRangers() {
 }
 
 async function addRanger(data) {
-  const response = await fetch("https://api-7fy6reml3q-uc.a.run.app/api/auth/rangers", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/rangers`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
