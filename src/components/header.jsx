@@ -8,6 +8,7 @@ import { ModeToggle } from "./mode";
 import { SearchBar } from "./SearchBar";
 import { useAuth } from "../context/AuthContext";
 import UserAvatar from "./user-avatar";
+import { MdOutlineGroups } from "react-icons/md";
 
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -36,10 +37,10 @@ const Header = () => {
                                     <div className="mt-1 ml-1 ">Home</div>
                                 </div>
                             </Link>
-                            <Link href="/services">
+                            <Link href="/team">
                                 <div className="flex items-center">
-                                    <Store size={20} />
-                                    <div className="mt-1 ml-1">Services</div>
+                                    <MdOutlineGroups size={30} className="text-slate-800" />
+                                    <div className="mt-1 ml-1">Team</div>
                                 </div>
                             </Link>
                             <div className="flex items-center">
@@ -79,10 +80,10 @@ const Header = () => {
                             <div className="mt-1 ml-1">Home</div>
                         </div>
                     </Link>
-                    <Link href="/services">
+                    <Link href="/team">
                         <div className="flex items-center">
-                            <Store size={20} />
-                            <div className="mt-1 ml-1">Services</div>
+                            <MdOutlineGroups size={30} />
+                            <div className="mt-1 ml-1">Team</div>
                         </div>
                     </Link>
                     <div className="flex items-center">
