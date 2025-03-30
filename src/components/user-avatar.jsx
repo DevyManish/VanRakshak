@@ -13,10 +13,9 @@ import { useAuth } from "@/context/AuthContext";
 import {
     LogOut,
     CircleUserRound,
-    Ticket,
-    IndianRupee,
-    Package,
+    LayoutDashboard
 } from "lucide-react";
+import Link from "next/link";
 
 const UserAvatar = () => {
     const { user, logout } = useAuth();
@@ -24,6 +23,8 @@ const UserAvatar = () => {
     // const logout = () => {
     //     console.log("logout");
     // }
+
+    //console.log(user)
 
     const nameShorter = (name) => {
         const namePart = name.split(" ");
@@ -56,37 +57,21 @@ const UserAvatar = () => {
                         </button>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
+                        {" "}
+                        <Link href="/dashboard">
+                            <button>
+                                <div className="flex items-center space-x-3">
+                                    <LayoutDashboard size={18} className="mt-1" />
+                                    <div className="">Dashboard</div>
+                                </div>
+                            </button>
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
                         <button onClick={logout}>
                             <div className="flex items-center space-x-3">
                                 <LogOut size={16} className="mt-1" />
                                 <div className="">Logout</div>
-                            </div>
-                        </button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        {" "}
-                        <button>
-                            <div className="flex items-center space-x-3">
-                                <Ticket size={18} className="mt-1" />
-                                <div className="">Bookings</div>
-                            </div>
-                        </button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        {" "}
-                        <button>
-                            <div className="flex items-center space-x-3">
-                                <IndianRupee size={18} className="mt-1" />
-                                <div className="">Transactions</div>
-                            </div>
-                        </button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        {" "}
-                        <button>
-                            <div className="flex items-center space-x-3">
-                                <Package size={18} className="mt-1" />
-                                <div className="">Parcels</div>
                             </div>
                         </button>
                     </DropdownMenuItem>

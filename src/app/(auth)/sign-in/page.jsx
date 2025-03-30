@@ -57,8 +57,8 @@ function Page() {
         }
       );
 
-      login(response.data.user);
-      console.log(response.data.user);
+      login(response.data.user, response.data.token);
+      //console.log(response.data.user );
 
       toast({
         title: `Welcome ${response.data.user.name.split(" ")[0]}`,
