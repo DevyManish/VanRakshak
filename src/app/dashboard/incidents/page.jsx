@@ -28,6 +28,11 @@ import {
 import { Eye, MapPin, ImageIcon } from "lucide-react"
 import Image from "next/image"
 import Sidebar from "@/components/sidebar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 
 const getAuthToken = () => {
   if (typeof window !== 'undefined') {
@@ -192,13 +197,30 @@ export default function IncidentReports() {
                         </TableCell>
                         <TableCell>
                           {report.mediaAttachments && report.mediaAttachments.length > 0 ? (
-                            <Badge
-                              variant="outline"
-                              className="flex items-center gap-1"
-                            >
-                              <ImageIcon className="h-3 w-3" />
-                              {report.mediaAttachments.length}
-                            </Badge>
+                            <Popover>
+                              <PopoverTrigger><Badge
+                                variant="outline"
+                                className="flex items-center gap-1"
+                              >
+                                <ImageIcon className="h-3 w-3" />
+                                {report.mediaAttachments.length}
+                              </Badge></PopoverTrigger>
+                              <PopoverContent><Card>
+                                <CardHeader>
+                                  <CardTitle>Attached Media</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                  <Image
+                                    src={report.mediaAttachments[0].fileUrl}
+                                    alt="Image"
+                                    width="1920"
+                                    height="1080"
+                                    className="rounded-md aspect-square"
+                                  />
+                                  {/* {console.log(report)} */}
+                                </CardContent>
+                              </Card></PopoverContent>
+                            </Popover>
                           ) : (
                             <span className="text-xs text-muted-foreground">
                               None

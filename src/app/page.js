@@ -11,13 +11,18 @@ export default function Home() {
         </div>
         <div className="md:w-1/3">
           <div className="grid grid-cols-2 gap-8">
-            <Image
-              src="/plants.jpg"
-              alt="Image"
-              width="1920"
-              height="1080"
-              className="rounded-md aspect-square"
-            />
+          <Card>
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Card Content</p>
+  </CardContent>
+  <CardFooter>
+    <p>Card Footer</p>
+  </CardFooter>
+</Card>
             <Image
               src="/animal.jpg"
               alt="Image"
