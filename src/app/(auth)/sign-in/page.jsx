@@ -78,7 +78,7 @@ function Page() {
   };
 
   return (
-    <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
+    <div className="mt-28 md:mt-1 min-h-screen w-full lg:grid lg:grid-cols-2">
       <div className="flex items-center justify-center px-6 py-12 lg:py-0">
         <form
           onSubmit={handleSubmit(onSubmit)}

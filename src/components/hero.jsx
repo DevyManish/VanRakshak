@@ -28,7 +28,7 @@ export const Hero5 = () => {
     return (
         <div className="w-full ">
             <div className="container mx-auto">
-                <div className="flex gap-8 py-20 lg:py-40 items-start justify-center flex-col">
+                <div className="flex gap-8 py-30  md:py-20 lg:py-40 items-start justify-center flex-col">
                     <div>
                         <Button variant="secondary" size="sm" className="gap-4">
                             Get started <MoveRight className="w-4 h-4" />
@@ -63,7 +63,7 @@ export const Hero5 = () => {
                             </span>
                         </h1>
 
-                        <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-left">
+                        <p className="text-lg md:text-xl text-balance leading-relaxed tracking-tight text-muted-foreground max-w-2xl ">
                             Protecting our forests shouldn't be complicated. Report threats, track wildlife, and support conservation efforts with just a few taps. Our mission is to empower communities to safeguard natural treasures for generations to come.
                         </p>
                     </div>

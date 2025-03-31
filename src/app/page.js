@@ -5,11 +5,11 @@ import { Hero5 } from "@/components/hero";
 export default function Home() {
   return (
     <div className="container w-full mx-auto px-18">
-      <div className="flex w-full items-center justify-center px-20">
-        <div className="w-2/3">
+      <div className="flex flex-col md:flex-row w-full items-center justify-center md:px-20">
+        <div className="w-full md:w-2/3">
           <Hero5 />
         </div>
-        <div className="w-1/3">
+        <div className="md:w-1/3">
           <div className="grid grid-cols-2 gap-8">
             <Image
               src="/plants.jpg"

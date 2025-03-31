@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/table"
 import { Eye, MapPin, ImageIcon } from "lucide-react"
 import Image from "next/image"
+import Sidebar from "@/components/sidebar"
 
 const getAuthToken = () => {
   if (typeof window !== 'undefined') {
@@ -134,240 +135,243 @@ export default function IncidentReports() {
   }
 
   return (
-    <div className="container mx-auto py-20 px-20 items-center justify-center mt-20">
-      <Card>
-        <CardHeader>
-          <CardTitle>Incident Reports</CardTitle>
-          <CardDescription>
-            A list of all reported incidents in the system
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Incident Type</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Severity</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Media</TableHead>
-                  <TableHead>Reported On</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {reports.length > 0 ? (
-                  reports.map(report => (
-                    <TableRow key={report.reportId}>
-                      <TableCell className="font-medium">
-                        {formatIncidentType(report.incidentType)}
-                      </TableCell>
-                      <TableCell className="max-w-[200px] truncate">
-                        {report.description || "No description"}
-                      </TableCell>
-                      <TableCell>
-                        <Badge className={getSeverityColor(report.severity)}>
-                          {report.severity || "UNKNOWN"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {report.location && report.location.latitude !== 0 &&
-                          report.location.longitude !== 0 ? (
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            <span className="text-xs">
-                              {report.location.latitude.toFixed(4)},{" "}
-                              {report.location.longitude.toFixed(4)}
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-xs text-muted-foreground">
-                            No location data
-                          </span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {report.mediaAttachments && report.mediaAttachments.length > 0 ? (
-                          <Badge
-                            variant="outline"
-                            className="flex items-center gap-1"
-                          >
-                            <ImageIcon className="h-3 w-3" />
-                            {report.mediaAttachments.length}
+    <div className="flex">
+      <Sidebar />
+      <div className="container mx-auto py-20 px-20 items-center justify-center mt-20">
+        <Card>
+          <CardHeader>
+            <CardTitle>Incident Reports</CardTitle>
+            <CardDescription>
+              A list of all reported incidents in the system
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Incident Type</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Severity</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Media</TableHead>
+                    <TableHead>Reported On</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {reports.length > 0 ? (
+                    reports.map(report => (
+                      <TableRow key={report.reportId}>
+                        <TableCell className="font-medium">
+                          {formatIncidentType(report.incidentType)}
+                        </TableCell>
+                        <TableCell className="max-w-[200px] truncate">
+                          {report.description || "No description"}
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={getSeverityColor(report.severity)}>
+                            {report.severity || "UNKNOWN"}
                           </Badge>
-                        ) : (
-                          <span className="text-xs text-muted-foreground">
-                            None
-                          </span>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-xs">
-                        {formatTimestamp(report.createdAt)}
-                      </TableCell>
-                      <TableCell>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => setSelectedReport(report)}
+                        </TableCell>
+                        <TableCell>
+                          {report.location && report.location.latitude !== 0 &&
+                            report.location.longitude !== 0 ? (
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-4 w-4" />
+                              <span className="text-xs">
+                                {report.location.latitude.toFixed(4)},{" "}
+                                {report.location.longitude.toFixed(4)}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">
+                              No location data
+                            </span>
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {report.mediaAttachments && report.mediaAttachments.length > 0 ? (
+                            <Badge
+                              variant="outline"
+                              className="flex items-center gap-1"
                             >
-                              <Eye className="h-4 w-4" />
-                              <span className="sr-only">View details</span>
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-3xl">
-                            {selectedReport && (
-                              <>
-                                <DialogHeader>
-                                  <DialogTitle>
-                                    Incident Report Details
-                                  </DialogTitle>
-                                  <DialogDescription>
-                                    Report ID: {selectedReport.reportId}
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <div className="grid gap-4 py-4">
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                      <h3 className="font-semibold mb-2">
-                                        Basic Information
-                                      </h3>
-                                      <div className="grid grid-cols-2 gap-2 text-sm">
-                                        <div className="text-muted-foreground">
-                                          Incident Type:
-                                        </div>
-                                        <div>
-                                          {formatIncidentType(
-                                            selectedReport.incidentType
-                                          )}
-                                        </div>
-                                        <div className="text-muted-foreground">
-                                          Status:
-                                        </div>
-                                        <div>{selectedReport.status || "N/A"}</div>
-                                        <div className="text-muted-foreground">
-                                          Severity:
-                                        </div>
-                                        <div>
-                                          <Badge
-                                            className={getSeverityColor(
-                                              selectedReport.severity
+                              <ImageIcon className="h-3 w-3" />
+                              {report.mediaAttachments.length}
+                            </Badge>
+                          ) : (
+                            <span className="text-xs text-muted-foreground">
+                              None
+                            </span>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-xs">
+                          {formatTimestamp(report.createdAt)}
+                        </TableCell>
+                        <TableCell>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => setSelectedReport(report)}
+                              >
+                                <Eye className="h-4 w-4" />
+                                <span className="sr-only">View details</span>
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-3xl">
+                              {selectedReport && (
+                                <>
+                                  <DialogHeader>
+                                    <DialogTitle>
+                                      Incident Report Details
+                                    </DialogTitle>
+                                    <DialogDescription>
+                                      Report ID: {selectedReport.reportId}
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Basic Information
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2 text-sm">
+                                          <div className="text-muted-foreground">
+                                            Incident Type:
+                                          </div>
+                                          <div>
+                                            {formatIncidentType(
+                                              selectedReport.incidentType
                                             )}
-                                          >
-                                            {selectedReport.severity || "UNKNOWN"}
-                                          </Badge>
-                                        </div>
-                                        <div className="text-muted-foreground">
-                                          Reporter ID:
-                                        </div>
-                                        <div>{selectedReport.reporterUserId || "N/A"}</div>
-                                        <div className="text-muted-foreground">
-                                          Created:
-                                        </div>
-                                        <div>
-                                          {formatTimestamp(
-                                            selectedReport.createdAt
-                                          )}
-                                        </div>
-                                        <div className="text-muted-foreground">
-                                          Updated:
-                                        </div>
-                                        <div>
-                                          {formatTimestamp(
-                                            selectedReport.updatedAt
-                                          )}
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold mb-2">
-                                        Location Information
-                                      </h3>
-                                      <div className="grid grid-cols-2 gap-2 text-sm">
-                                        <div className="text-muted-foreground">
-                                          Latitude:
-                                        </div>
-                                        <div>
-                                          {selectedReport.location?.latitude || "N/A"}
-                                        </div>
-                                        <div className="text-muted-foreground">
-                                          Longitude:
-                                        </div>
-                                        <div>
-                                          {selectedReport.location?.longitude || "N/A"}
-                                        </div>
-                                        <div className="text-muted-foreground">
-                                          Accuracy:
-                                        </div>
-                                        <div>
-                                          {selectedReport.location?.accuracy || "N/A"} meters
-                                        </div>
-                                        <div className="text-muted-foreground">
-                                          Timestamp:
-                                        </div>
-                                        <div>
-                                          {selectedReport.location?.timestamp || "N/A"}
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div>
-                                    <h3 className="font-semibold mb-2">
-                                      Description
-                                    </h3>
-                                    <p className="text-sm">
-                                      {selectedReport.description || "No description provided"}
-                                    </p>
-                                  </div>
-                                  {selectedReport.mediaAttachments && selectedReport.mediaAttachments.length > 0 && (
-                                    <div>
-                                      <h3 className="font-semibold mb-2">
-                                        Media Attachments
-                                      </h3>
-                                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                        {selectedReport.mediaAttachments.map(
-                                          (media, index) => (
-                                            <div
-                                              key={index}
-                                              className="relative aspect-square rounded-md overflow-hidden border"
+                                          </div>
+                                          <div className="text-muted-foreground">
+                                            Status:
+                                          </div>
+                                          <div>{selectedReport.status || "N/A"}</div>
+                                          <div className="text-muted-foreground">
+                                            Severity:
+                                          </div>
+                                          <div>
+                                            <Badge
+                                              className={getSeverityColor(
+                                                selectedReport.severity
+                                              )}
                                             >
-                                              <Image
-                                                src={
-                                                  media.thumbnailUrl ||
-                                                  media.fileUrl
-                                                }
-                                                alt={`Attachment ${index + 1}`}
-                                                fill
-                                                className="object-cover"
-                                              />
-                                            </div>
-                                          )
-                                        )}
+                                              {selectedReport.severity || "UNKNOWN"}
+                                            </Badge>
+                                          </div>
+                                          <div className="text-muted-foreground">
+                                            Reporter ID:
+                                          </div>
+                                          <div>{selectedReport.reporterUserId || "N/A"}</div>
+                                          <div className="text-muted-foreground">
+                                            Created:
+                                          </div>
+                                          <div>
+                                            {formatTimestamp(
+                                              selectedReport.createdAt
+                                            )}
+                                          </div>
+                                          <div className="text-muted-foreground">
+                                            Updated:
+                                          </div>
+                                          <div>
+                                            {formatTimestamp(
+                                              selectedReport.updatedAt
+                                            )}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Location Information
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-2 text-sm">
+                                          <div className="text-muted-foreground">
+                                            Latitude:
+                                          </div>
+                                          <div>
+                                            {selectedReport.location?.latitude || "N/A"}
+                                          </div>
+                                          <div className="text-muted-foreground">
+                                            Longitude:
+                                          </div>
+                                          <div>
+                                            {selectedReport.location?.longitude || "N/A"}
+                                          </div>
+                                          <div className="text-muted-foreground">
+                                            Accuracy:
+                                          </div>
+                                          <div>
+                                            {selectedReport.location?.accuracy || "N/A"} meters
+                                          </div>
+                                          <div className="text-muted-foreground">
+                                            Timestamp:
+                                          </div>
+                                          <div>
+                                            {selectedReport.location?.timestamp || "N/A"}
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                  )}
-                                </div>
-                              </>
-                            )}
-                          </DialogContent>
-                        </Dialog>
+                                    <div>
+                                      <h3 className="font-semibold mb-2">
+                                        Description
+                                      </h3>
+                                      <p className="text-sm">
+                                        {selectedReport.description || "No description provided"}
+                                      </p>
+                                    </div>
+                                    {selectedReport.mediaAttachments && selectedReport.mediaAttachments.length > 0 && (
+                                      <div>
+                                        <h3 className="font-semibold mb-2">
+                                          Media Attachments
+                                        </h3>
+                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                          {selectedReport.mediaAttachments.map(
+                                            (media, index) => (
+                                              <div
+                                                key={index}
+                                                className="relative aspect-square rounded-md overflow-hidden border"
+                                              >
+                                                <Image
+                                                  src={
+                                                    media.thumbnailUrl ||
+                                                    media.fileUrl
+                                                  }
+                                                  alt={`Attachment ${index + 1}`}
+                                                  fill
+                                                  className="object-cover"
+                                                />
+                                              </div>
+                                            )
+                                          )}
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                </>
+                              )}
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={7} className="text-center py-8">
+                        No reports found
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center py-8">
-                      No reports found
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

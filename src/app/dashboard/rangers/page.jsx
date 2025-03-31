@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import Sidebar from "@/components/sidebar"
 
 // Form schema for validation
 const formSchema = z.object({
@@ -429,30 +430,33 @@ export default function RangersPage() {
   }
 
   return (
-    <div className="container mx-auto py-20 px-20 items-center justify-center mt-10">
-      <Card className="w-full">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-2xl">Forest Rangers</CardTitle>
-          <Button onClick={() => setIsDialogOpen(true)} className="bg-green-500 hover:bg-green-300">
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Add Ranger
-          </Button>
-        </CardHeader>
-        <CardContent>
-          {error ? (
-            <div className="text-red-500 p-4 border rounded">
-              Error loading rangers: {error}
-              <Button variant="outline" className="ml-4" onClick={fetchRangers}>
-                Retry
-              </Button>
-            </div>
-          ) : (
-            <RangersTable rangers={rangers} isLoading={isLoading} />
-          )}
-        </CardContent>
-      </Card>
+    <div className="flex">
+      <Sidebar />
+      <div className="container mx-auto py-20 px-20 items-center justify-center mt-10">
+        <Card className="w-full">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-2xl">Forest Rangers</CardTitle>
+            <Button onClick={() => setIsDialogOpen(true)} className="bg-green-500 hover:bg-green-300">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add Ranger
+            </Button>
+          </CardHeader>
+          <CardContent>
+            {error ? (
+              <div className="text-red-500 p-4 border rounded">
+                Error loading rangers: {error}
+                <Button variant="outline" className="ml-4" onClick={fetchRangers}>
+                  Retry
+                </Button>
+              </div>
+            ) : (
+              <RangersTable rangers={rangers} isLoading={isLoading} />
+            )}
+          </CardContent>
+        </Card>
 
-      <AddRangerDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} onRangerAdded={handleRangerAdded} />
+        <AddRangerDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} onRangerAdded={handleRangerAdded} />
+      </div>
     </div>
   )
 }

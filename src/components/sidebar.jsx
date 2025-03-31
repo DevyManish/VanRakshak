@@ -5,10 +5,13 @@ import { navItems } from '@/constants/data';
 import { cn } from '@/lib/utils';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
+// import { useAuth } from "@/context/AuthContext";
 
 export default function Sidebar({ className }) {
     // State to manage the sidebar's minimized state
     const [isMinimized, setIsMinimized] = useState(false);
+        // const { user, logout } = useAuth();
+    
 
     // Function to toggle the sidebar's state
     const handleToggle = () => {

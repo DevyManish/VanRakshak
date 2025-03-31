@@ -56,7 +56,7 @@ const Header = () => {
                                             <UserAvatar />
                                         </>
                                     ) : (
-                                        <Button className="flex font-medium text-base rounded-full mt-2  px-5 py-2.5 mb-2">
+                                        <Button className="flex font-medium text-base rounded-full mt-2  px-5 py-2.5 mb-2 bg-green-500 hover:bg-green-500">
                                             <div className=" mt-0">Login</div>
                                         </Button>
                                     )}

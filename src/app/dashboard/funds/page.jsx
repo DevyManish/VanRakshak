@@ -36,6 +36,7 @@ import {
   TableCaption
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge";
+import Sidebar from "@/components/sidebar";
 
 const getAuthToken = () => {
   if (typeof window !== 'undefined') {
@@ -226,148 +227,151 @@ export default function FundraiserManagement() {
   // };
 
   return (
-    <Card className="w-full px-20 py-20 mt-20">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-2xl">Fundraisers</CardTitle>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-green-500 hover:bg-green-300">
-              <Plus className="mr-2 h-4 w-4" />
-              Create Fundraiser
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[500px]">
-            <form onSubmit={handleSubmit}>
-              <DialogHeader>
-                <DialogTitle>Create New Fundraiser</DialogTitle>
-                <DialogDescription>
-                  Fill in the details below to create a new fundraiser campaign.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid gap-2">
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    placeholder="Forest Conservation 2023"
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    placeholder="Help us plant 10,000 trees"
-                    required
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="targetAmount">Target Amount (₹)</Label>
-                  <Input
-                    id="targetAmount"
-                    name="targetAmount"
-                    type="number"
-                    value={formData.targetAmount || ""}
-                    onChange={handleInputChange}
-                    placeholder="50000"
-                    min="1"
-                    required
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
+    <div className="flex">
+      <Sidebar />
+      <Card className="w-full px-20 py-20 mt-20">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-2xl">Fundraisers</CardTitle>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-green-500 hover:bg-green-300">
+                <Plus className="mr-2 h-4 w-4" />
+                Create Fundraiser
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[500px]">
+              <form onSubmit={handleSubmit}>
+                <DialogHeader>
+                  <DialogTitle>Create New Fundraiser</DialogTitle>
+                  <DialogDescription>
+                    Fill in the details below to create a new fundraiser campaign.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
                   <div className="grid gap-2">
-                    <Label htmlFor="startDate">Start Date</Label>
+                    <Label htmlFor="title">Title</Label>
                     <Input
-                      id="startDate"
-                      name="startDate"
-                      type="date"
-                      value={formData.startDate}
+                      id="title"
+                      name="title"
+                      value={formData.title}
                       onChange={handleInputChange}
+                      placeholder="Forest Conservation 2023"
                       required
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label htmlFor="endDate">End Date</Label>
-                    <Input
-                      id="endDate"
-                      name="endDate"
-                      type="date"
-                      value={formData.endDate}
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea
+                      id="description"
+                      name="description"
+                      value={formData.description}
                       onChange={handleInputChange}
+                      placeholder="Help us plant 10,000 trees"
                       required
                     />
                   </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="targetAmount">Target Amount (₹)</Label>
+                    <Input
+                      id="targetAmount"
+                      name="targetAmount"
+                      type="number"
+                      value={formData.targetAmount || ""}
+                      onChange={handleInputChange}
+                      placeholder="50000"
+                      min="1"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-2">
+                      <Label htmlFor="startDate">Start Date</Label>
+                      <Input
+                        id="startDate"
+                        name="startDate"
+                        type="date"
+                        value={formData.startDate}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="grid gap-2">
+                      <Label htmlFor="endDate">End Date</Label>
+                      <Input
+                        id="endDate"
+                        name="endDate"
+                        type="date"
+                        value={formData.endDate}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <DialogFooter>
-                <Button type="button" variant="outline" onClick={() => setOpen(false)} >
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={formSubmitting} className="bg-green-500 hover:bg-green-300">
-                  {formSubmitting && <Loader className="mr-2 h-4 w-4 animate-spin" />}
-                  Create Fundraiser
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </CardHeader>
-      <CardContent>
-        {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <Loader className="h-8 w-8 animate-spin text-primary" />
-            <span className="ml-2">Loading fundraisers...</span>
-          </div>
-        ) : error ? (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        ) : fundraisers.length === 0 ? (
-          <div className="text-center py-8 text-muted-foreground">
-            No fundraisers found. Create your first fundraiser by clicking the button above.
-          </div>
-        ) : (
-          <Table>
-            <TableCaption>A list of all fundraisers.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Title</TableHead>
-                <TableHead>Description</TableHead>
-                <TableHead>Target Amount</TableHead>
-                <TableHead>Start Date</TableHead>
-                <TableHead>End Date</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {fundraisers.map((fundraiser) => (
-                <TableRow key={fundraiser.id}>
-                  <TableCell className="font-medium">{fundraiser.title}</TableCell>
-                  <TableCell className="max-w-xs truncate">{fundraiser.description}</TableCell>
-                  <TableCell>₹ {(fundraiser.targetAmount)}</TableCell>
-                  <TableCell>{formatDate(fundraiser.startDate)}</TableCell>
-                  <TableCell>{formatDate(fundraiser.endDate)}</TableCell>
-                  <TableCell>
-                    {fundraiser.status && (
-                      <Badge variant={fundraiser.status === "active" ? "default" : "secondary"} className="bg-green-500 hover:bg-green-300">
-                        {fundraiser.status}
-                      </Badge>
-                    )}
-                  </TableCell>
+                <DialogFooter>
+                  <Button type="button" variant="outline" onClick={() => setOpen(false)} >
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={formSubmitting} className="bg-green-500 hover:bg-green-300">
+                    {formSubmitting && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+                    Create Fundraiser
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <Loader className="h-8 w-8 animate-spin text-primary" />
+              <span className="ml-2">Loading fundraisers...</span>
+            </div>
+          ) : error ? (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          ) : fundraisers.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              No fundraisers found. Create your first fundraiser by clicking the button above.
+            </div>
+          ) : (
+            <Table>
+              <TableCaption>A list of all fundraisers.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Title</TableHead>
+                  <TableHead>Description</TableHead>
+                  <TableHead>Target Amount</TableHead>
+                  <TableHead>Start Date</TableHead>
+                  <TableHead>End Date</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </CardContent>
-    </Card>
+              </TableHeader>
+              <TableBody>
+                {fundraisers.map((fundraiser) => (
+                  <TableRow key={fundraiser.id}>
+                    <TableCell className="font-medium">{fundraiser.title}</TableCell>
+                    <TableCell className="max-w-xs truncate">{fundraiser.description}</TableCell>
+                    <TableCell>₹ {(fundraiser.targetAmount)}</TableCell>
+                    <TableCell>{formatDate(fundraiser.startDate)}</TableCell>
+                    <TableCell>{formatDate(fundraiser.endDate)}</TableCell>
+                    <TableCell>
+                      {fundraiser.status && (
+                        <Badge variant={fundraiser.status === "active" ? "default" : "secondary"} className="bg-green-500 hover:bg-green-300">
+                          {fundraiser.status}
+                        </Badge>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
