@@ -359,10 +359,7 @@ export default function IncidentReports() {
                                                 className="relative aspect-square rounded-md overflow-hidden border"
                                               >
                                                 <Image
-                                                  src={
-                                                    media.thumbnailUrl ||
-                                                    media.fileUrl
-                                                  }
+                                                  src={report.mediaAttachments[0].fileUrl}
                                                   alt={`Attachment ${index + 1}`}
                                                   fill
                                                   className="object-cover"
