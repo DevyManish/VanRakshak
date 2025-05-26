@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 import { useEffect, useState } from "react"
+import { Loader2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns"
 
 export default function IncidentsPage() {
@@ -89,7 +90,6 @@ export default function IncidentsPage() {
         fetchFundraisers()
         fetchRangers()
     }, [])
-
     const handleLike = async (postId) => {
         try {
             const token = localStorage.getItem("token")
@@ -102,9 +102,20 @@ export default function IncidentsPage() {
 
             if (response.ok) {
                 setPosts((prevPosts) =>
-                    prevPosts.map((post) =>
-                        post.postId === postId ? { ...post, likes: [...post.likes, { userId: "current-user" }] } : post,
-                    ),
+                    prevPosts.map((post) => {
+                        if (post.postId === postId) {
+                            // Check if user already liked the post
+                            const alreadyLiked = post.likes.some(like => like.userId === "current-user");
+
+                            return {
+                                ...post,
+                                likes: alreadyLiked
+                                    ? post.likes.filter(like => like.userId !== "current-user") // Remove like
+                                    : [...post.likes, { userId: "current-user" }] // Add like
+                            };
+                        }
+                        return post;
+                    }),
                 )
             }
         } catch (err) {
@@ -218,10 +229,16 @@ export default function IncidentsPage() {
                                     <div className="flex items-center space-x-4">
                                         <button
                                             onClick={() => handleLike(post.postId)}
-                                            className="flex items-center space-x-1 text-red-500 hover:text-red-600"
+                                            className="flex items-center space-x-1 hover:text-red-600"
                                         >
-                                            <Heart className="w-5 h-5" />
-                                            <span>{post.likes.length}</span>
+                                            <Heart
+                                                className="w-5 h-5"
+                                                fill={post.likes.some(like => like.userId === "current-user") ? "currentColor" : "none"}
+                                                color={post.likes.some(like => like.userId === "current-user") ? "#dc2626" : "currentColor"}
+                                            />
+                                            <span className={post.likes.some(like => like.userId === "current-user") ? "text-red-600" : ""}>
+                                                {post.likes.length}
+                                            </span>
                                         </button>
                                         <button className="flex items-center space-x-1 text-gray-600">
                                             <MessageSquare className="w-5 h-5" />
