@@ -78,8 +78,8 @@ export default function SignUpPage() {
         },
         { withCredentials: true }
       );
-      // router.push("/sign-in");
-      router.push("/dashboard");
+      router.push("/sign-in");
+      // router.push("/dashboard");
     } catch (error) {
       toast({
         title: error.response?.data?.message || "Sign up failed",

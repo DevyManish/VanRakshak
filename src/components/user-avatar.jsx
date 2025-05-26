@@ -16,15 +16,11 @@ import {
     LayoutDashboard
 } from "lucide-react";
 import Link from "next/link";
+import { IconDevices } from '@tabler/icons-react';
 
 const UserAvatar = () => {
     const { user, logout } = useAuth();
-    // const user = "Manish Gupta";
-    // const logout = () => {
-    //     console.log("logout");
-    // }
 
-    //console.log(user)
 
     const nameShorter = (name) => {
         const namePart = name.split(" ");
@@ -49,12 +45,25 @@ const UserAvatar = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                         {" "}
-                        <button>
-                            <div className="flex items-center space-x-3">
-                                <CircleUserRound size={18} className="mt-1" />
-                                <div className="">Profile</div>
-                            </div>
-                        </button>
+                        <Link href="/app/profile">
+                            <button>
+                                <div className="flex items-center space-x-3">
+                                    <CircleUserRound size={18} className="mt-1" />
+                                    <div className="">Profile</div>
+                                </div>
+                            </button>
+                        </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                        {" "}
+                        <Link href="/app">
+                            <button>
+                                <div className="flex items-center space-x-3">
+                                    <IconDevices size={18} className="mt-1" />
+                                    <div className="">App</div>
+                                </div>
+                            </button>
+                        </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         {" "}
